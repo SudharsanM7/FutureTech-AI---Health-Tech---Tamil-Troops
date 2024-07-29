@@ -1,0 +1,18 @@
+import random
+import time
+
+def simulate_wearable_data():
+    return {
+        'heart_rate': random.randint(60, 100),
+        'steps': random.randint(1000, 10000),
+        'calories_burned': random.randint(200, 800)
+    }
+
+def send_data_to_server(data):
+    # Placeholder function for sending data to a server
+    print(f"Sending data to server: {data}")
+
+while True:
+    wearable_data = simulate_wearable_data()
+    send_data_to_server(wearable_data)
+    time.sleep(15)  # Simulate data every 15 seconds
