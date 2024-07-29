@@ -1,0 +1,31 @@
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
+import plotly.express as px
+import pandas as pd
+
+app = dash.Dash(__name__)
+
+# Sample user analytics data
+data = pd.DataFrame({
+    'user': ['User1', 'User2', 'User3', 'User4'],
+    'steps': [5000, 7000, 6500, 8000],
+    'calories_burned': [300, 450, 400, 500]
+})
+
+app.layout = html.Div([
+    html.H1("Healthcare Data Dashboard"),
+    
+    dcc.Graph(
+        id='steps-bar-chart',
+        figure=px.bar(data, x='user', y='steps', title='Steps per User')
+    ),
+    
+    dcc.Graph(
+        id='calories-pie-chart',
+        figure=px.pie(data, names='user', values='calories_burned', title='Calories Burned per User')
+    )
+])
+
+if __name__ == '__main__':
+    app.run_server(debug=True)
