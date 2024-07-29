@@ -1,0 +1,17 @@
+import pickle
+import numpy as np
+
+# Load a pre-trained model (replace 'model.pkl' with your model file)
+with open('model.pkl', 'rb') as model_file:
+    model = pickle.load(model_file)
+
+def predict_health_risk(features):
+    # Example features: [age, weight, height, blood_pressure, cholesterol]
+    features_array = np.array(features).reshape(1, -1)
+    prediction = model.predict(features_array)
+    return prediction[0]
+
+# Example usage
+features = [45, 70, 175, 120, 200]  # Sample feature values
+risk = predict_health_risk(features)
+print(f"Health risk prediction: {risk}")
