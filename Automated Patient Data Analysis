@@ -1,0 +1,25 @@
+import numpy as np
+import pandas as pd
+
+def analyze_patient_data(patient_data):
+    df = pd.DataFrame(patient_data)
+    
+    # Example analysis
+    mean_heart_rate = np.mean(df['heart_rate'])
+    max_steps = np.max(df['steps'])
+    abnormal_heart_rate = df[df['heart_rate'] > 100]
+    
+    return {
+        'mean_heart_rate': mean_heart_rate,
+        'max_steps': max_steps,
+        'abnormal_heart_rate': abnormal_heart_rate
+    }
+
+# Example patient data
+patient_data = {
+    'heart_rate': [72, 85, 90, 110, 95],
+    'steps': [5000, 7000, 6000, 8000, 6500]
+}
+
+analysis_results = analyze_patient_data(patient_data)
+print(analysis_results)
