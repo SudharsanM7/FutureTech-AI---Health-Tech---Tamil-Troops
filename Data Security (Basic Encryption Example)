@@ -1,0 +1,24 @@
+from cryptography.fernet import Fernet
+
+# Generate a key for encryption
+key = Fernet.generate_key()
+cipher_suite = Fernet(key)
+
+# Encrypt data
+def encrypt_data(data):
+    json_data = json.dumps(data).encode('utf-8')
+    encrypted_data = cipher_suite.encrypt(json_data)
+    return encrypted_data
+
+# Decrypt data
+def decrypt_data(encrypted_data):
+    decrypted_data = cipher_suite.decrypt(encrypted_data)
+    return json.loads(decrypted_data.decode('utf-8'))
+
+# Example usage
+data = {'patient1': {'heart_rate': 72, 'blood_pressure': '120/80'}}
+encrypted_data = encrypt_data(data)
+print("Encrypted:", encrypted_data)
+
+decrypted_data = decrypt_data(encrypted_data)
+print("Decrypted:", decrypted_data)
