@@ -1,0 +1,14 @@
+def locate_available_doctor(emergency_type):
+    # Simulate locating a doctor
+    doctors = {'cardiac': 'Dr. Smith', 'general': 'Dr. Johnson'}
+    return doctors.get(emergency_type, 'No available doctor')
+
+def respond_to_emergency(emergency_type):
+    doctor = locate_available_doctor(emergency_type)
+    if doctor != 'No available doctor':
+        print(f"Emergency Response: Contacting {doctor} for {emergency_type} emergency.")
+    else:
+        print("Emergency Response: No doctor available for this type of emergency.")
+
+# Example usage
+respond_to_emergency('cardiac')
