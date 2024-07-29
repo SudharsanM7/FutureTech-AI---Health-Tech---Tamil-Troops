@@ -1,0 +1,26 @@
+import json
+
+# Sample data from different sources
+def aggregate_health_data(patient_id, *data_sources):
+    health_data = {}
+    for source in data_sources:
+        health_data.update(source.get_data(patient_id))
+    return health_data
+
+# Example data source class
+class DataSource:
+    def __init__(self, name, data):
+        self.name = name
+        self.data = data
+    
+    def get_data(self, patient_id):
+        return self.data.get(patient_id, {})
+
+# Sample data sources
+source1 = DataSource('Hospital A', {'patient1': {'blood_pressure': '120/80', 'heart_rate': '72'}})
+source2 = DataSource('Clinic B', {'patient1': {'temperature': '98.6F', 'glucose_level': '90'}})
+
+# Aggregate data for patient1
+patient_id = 'patient1'
+aggregated_data = aggregate_health_data(patient_id, source1, source2)
+print(json.dumps(aggregated_data, indent=2))
