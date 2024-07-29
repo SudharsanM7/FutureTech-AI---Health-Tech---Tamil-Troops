@@ -1,0 +1,31 @@
+import smtplib
+from email.mime.text import MIMEText
+
+def send_notification(email, subject, message):
+    msg = MIMEText(message)
+    msg['Subject'] = subject
+    msg['From'] = 'your_email@example.com'
+    msg['To'] = email
+
+    # Send the message via our SMTP server
+    with smtplib.SMTP('smtp.example.com', 587) as server:
+        server.starttls()
+        server.login('your_email@example.com', 'your_password')
+        server.send_message(msg)
+
+def check_and_notify(patient_data):
+    abnormal_data = [data for data in patient_data if data['heart_rate'] > 100]
+    if abnormal_data:
+        subject = 'Alert: Abnormal Heart Rate Detected'
+        message = f"Abnormal heart rate detected: {abnormal_data}"
+        send_notification('doctor@example.com', subject, message)
+
+# Example patient data
+patient_data = [
+    {'heart_rate': 72},
+    {'heart_rate': 85},
+    {'heart_rate': 110},
+    {'heart_rate': 95}
+]
+
+check_and_notify(patient_data)
