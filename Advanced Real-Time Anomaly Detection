@@ -1,0 +1,23 @@
+from sklearn.ensemble import IsolationForest
+import numpy as np
+import pandas as pd
+
+# Load the model (assumes it's pre-trained; replace with your model file)
+# For demonstration, we train a simple Isolation Forest model here
+def train_anomaly_detection_model(data):
+    model = IsolationForest(contamination=0.05)
+    model.fit(data)
+    return model
+
+# Sample training data
+training_data = np.array([[70, 300], [75, 400], [80, 500], [85, 600], [120, 700]])
+model = train_anomaly_detection_model(training_data)
+
+def detect_anomalies(new_data):
+    predictions = model.predict(new_data)
+    return [True if p == -1 else False for p in predictions]
+
+# Example real-time data
+new_data = np.array([[72, 350], [95, 750]])  # Include some normal and some abnormal data
+anomalies = detect_anomalies(new_data)
+print(f"Anomaly detection results: {anomalies}")
