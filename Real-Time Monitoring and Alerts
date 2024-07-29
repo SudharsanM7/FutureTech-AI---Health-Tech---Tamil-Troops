@@ -1,0 +1,23 @@
+import random
+import time
+
+# Simulated real-time monitoring function
+def monitor_health(patient_data):
+    while True:
+        # Simulate data update
+        patient_data['heart_rate'] = random.randint(60, 100)
+        patient_data['blood_pressure'] = f"{random.randint(110, 130)}/{random.randint(70, 90)}"
+        
+        # Check for abnormalities
+        if patient_data['heart_rate'] > 90 or int(patient_data['blood_pressure'].split('/')[0]) > 120:
+            send_alert(patient_data)
+        
+        time.sleep(10)  # Update every 10 seconds
+
+# Alert system
+def send_alert(data):
+    print(f"ALERT: Abnormal readings detected - {data}")
+
+# Simulated patient data
+patient_data = {'heart_rate': 72, 'blood_pressure': '120/80'}
+monitor_health(patient_data)
