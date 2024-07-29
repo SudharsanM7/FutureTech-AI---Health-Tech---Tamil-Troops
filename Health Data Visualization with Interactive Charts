@@ -1,0 +1,32 @@
+import plotly.graph_objects as go
+
+def create_health_chart(heart_rate, steps):
+    fig = go.Figure()
+
+    fig.add_trace(go.Scatter(
+        x=list(range(len(heart_rate))),
+        y=heart_rate,
+        mode='lines+markers',
+        name='Heart Rate'
+    ))
+
+    fig.add_trace(go.Bar(
+        x=list(range(len(steps))),
+        y=steps,
+        name='Steps'
+    ))
+
+    fig.update_layout(
+        title='Health Data Visualization',
+        xaxis_title='Time',
+        yaxis_title='Value',
+        barmode='group'
+    )
+
+    fig.show()
+
+# Example health data
+heart_rate = [72, 85, 90, 110, 95]
+steps = [5000, 7000, 6000, 8000, 6500]
+
+create_health_chart(heart_rate, steps)
