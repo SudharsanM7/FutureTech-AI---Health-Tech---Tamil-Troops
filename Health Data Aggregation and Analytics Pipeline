@@ -1,0 +1,24 @@
+import pandas as pd
+
+# Extract: Load data from multiple sources
+def extract_data():
+    # Replace with actual data loading logic
+    data1 = pd.read_csv('health_data1.csv')
+    data2 = pd.read_csv('health_data2.csv')
+    return pd.concat([data1, data2])
+
+# Transform: Clean and aggregate data
+def transform_data(data):
+    data.dropna(inplace=True)
+    data['total_steps'] = data.groupby('user')['steps'].transform('sum')
+    return data
+
+# Load: Save transformed data to a new file or database
+def load_data(data):
+    data.to_csv('aggregated_health_data.csv', index=False)
+
+# ETL Pipeline
+data = extract_data()
+transformed_data = transform_data(data)
+load_data(transformed_data)
+print("ETL pipeline completed successfully.")
