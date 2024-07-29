@@ -1,0 +1,26 @@
+from kafka import KafkaProducer, KafkaConsumer
+import json
+
+# Setup Kafka producer
+producer = KafkaProducer(bootstrap_servers='localhost:9092', value_serializer=lambda v: json.dumps(v).encode('utf-8'))
+
+# Send data to Kafka topic
+def send_health_data(topic, data):
+    producer.send(topic, data)
+
+# Setup Kafka consumer
+consumer = KafkaConsumer('health_topic', bootstrap_servers='localhost:9092', value_deserializer=lambda x: json.loads(x.decode('utf-8')))
+
+# Process messages from Kafka topic
+def process_messages():
+    for message in consumer:
+        data = message.value
+        print(f"Received data: {data}")
+        # Process the data (e.g., store it, analyze it, etc.)
+
+# Example data
+data = {'heart_rate': 75, 'steps': 5000}
+send_health_data('health_topic', data)
+
+# Start processing messages
+process_messages()
