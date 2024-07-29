@@ -1,0 +1,68 @@
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
+from dash.dependencies import Input, Output
+import plotly.graph_objs as go
+import random
+import pandas as pd
+
+app = dash.Dash(__name__)
+
+# Sample data for dashboard
+def generate_data():
+    return {
+        'time': pd.Timestamp.now(),
+        'heart_rate': random.randint(60, 100),
+        'steps': random.randint(1000, 10000),
+        'calories_burned': random.randint(200, 800)
+    }
+
+data = pd.DataFrame(columns=['time', 'heart_rate', 'steps', 'calories_burned'])
+
+app.layout = html.Div([
+    dcc.Graph(id='live-update-graph', style={'height': '70vh'}),
+    dcc.Interval(
+        id='interval-component',
+        interval=5*1000,  # in milliseconds
+        n_intervals=0
+    )
+])
+
+@app.callback(Output('live-update-graph', 'figure'),
+              [Input('interval-component', 'n_intervals')])
+def update_graph(n):
+    global data
+    new_data = generate_data()
+    data = data.append(new_data, ignore_index=True)
+
+    figure = {
+        'data': [
+            go.Scatter(
+                x=data['time'],
+                y=data['heart_rate'],
+                mode='lines+markers',
+                name='Heart Rate'
+            ),
+            go.Scatter(
+                x=data['time'],
+                y=data['steps'],
+                mode='lines+markers',
+                name='Steps'
+            ),
+            go.Scatter(
+                x=data['time'],
+                y=data['calories_burned'],
+                mode='lines+markers',
+                name='Calories Burned'
+            )
+        ],
+        'layout': go.Layout(
+            title='Real-Time Health Monitoring',
+            xaxis=dict(title='Time'),
+            yaxis=dict(title='Value')
+        )
+    }
+    return figure
+
+if __name__ == '__main__':
+    app.run_server(debug=True)
