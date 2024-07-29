@@ -1,0 +1,31 @@
+def generate_diet_plan(health_data):
+    # Simple logic for diet plan based on health data
+    calorie_needs = health_data.get('calories_burned', 0)
+    if calorie_needs > 600:
+        return "High-protein diet with additional calories."
+    elif calorie_needs > 400:
+        return "Balanced diet with moderate calories."
+    else:
+        return "Low-calorie diet with emphasis on vegetables."
+
+def generate_fitness_plan(health_data):
+    # Simple logic for fitness plan based on steps
+    steps = health_data.get('steps', 0)
+    if steps > 8000:
+        return "Intensive workout plan with strength training."
+    elif steps > 5000:
+        return "Moderate workout plan with cardio exercises."
+    else:
+        return "Beginner workout plan with light exercises."
+
+# Example user health data
+user_health_data = {
+    'calories_burned': 650,
+    'steps': 6000
+}
+
+diet_plan = generate_diet_plan(user_health_data)
+fitness_plan = generate_fitness_plan(user_health_data)
+
+print(f"Diet Plan: {diet_plan}")
+print(f"Fitness Plan: {fitness_plan}")
